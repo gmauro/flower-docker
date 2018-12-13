@@ -1,21 +1,13 @@
-# Based on Debian
-FROM debian:stretch-slim
-MAINTAINER Gianmauro Cuccuru <gmauro@crs4.it>
+# Based on Debian-stretch
+FROM python:2.7
+MAINTAINER Gianmauro Cuccuru <gmauro@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update \
- && apt-get install --no-install-recommends -q -y \
-    apt-utils \
-    python-pip \
-    python-setuptools \
-    python-wheel \
- && apt-get autoremove \
- && apt-get clean
+# Install Flower
+ENV FLOWER_VERSION='0.9.1'
+RUN pip install flower==$FLOWER_VERSION 
 
 EXPOSE 5555
 
-RUN pip install flower
-
-ENTRYPOINT ["flower"]
+# Run Flower
+ENTRYPOINT ["flower", "--port=5555"]
 
